@@ -1,9 +1,11 @@
-import Image from "next/image";
+import Header from "./_components/Header";
+import Hero from "./_components/Hero";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Home page of ai website generator</h1>
+    <div className="px-8">
+      <Header />
+      <Hero />
     </div>
   );
 }
