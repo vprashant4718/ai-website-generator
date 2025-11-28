@@ -1,9 +1,12 @@
+"use client"
 import { ModeToggle } from '@/components/theme-toggle'
 import Image from 'next/image'
 import Logo from '../../assets/ai-logo.png';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { SignInButton } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 const HeadButtons = [
   {
@@ -16,12 +19,17 @@ const HeadButtons = [
   }
 ]; 
 
+
+
 export default function Header() {
+
+  const { isSignedIn, user, isLoaded } = useUser()
+
   return (
     <div className='flex flex-row justify-between items-center p-3'>
       <div className='flex flex-row justify-center items-center gap-3'>
         <Image src={Logo} alt='logo' width={40} height={40}/>
-        <h2 className='font-semibold text-xl'>AI Website Generator</h2>
+        <h2 className='font-semibold text-xl'>AI Website Builder</h2>
       </div>
 
         <div className='flex flex-row justify-center items-center gap-5'>
@@ -33,7 +41,15 @@ export default function Header() {
         </div>
 
         <div className='flex flex-row justify-center items-center gap-5'>
-          <Button size={"sm"} >Get Started <ArrowRight/></Button>
+        
+          {isSignedIn?
+          <Link href={"/workspace"}>
+            <Button size={"sm"} >Get Started <ArrowRight/></Button>
+          </Link>
+              :
+          <SignInButton mode='modal' forceRedirectUrl={"/workspace"}>
+            <Button size={"sm"} >Get Started <ArrowRight/></Button>
+          </SignInButton> }
           <ModeToggle />
         </div>
     </div>

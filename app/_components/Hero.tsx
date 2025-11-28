@@ -1,9 +1,13 @@
 "use client"
 import { Button } from '@/components/ui/button'
-import { ArrowUp, HomeIcon, ImagePlus, Key, LayoutDashboard, User } from 'lucide-react'
-import React, { useState } from 'react'
+import { ArrowUp, HomeIcon, ImagePlus, Key, LayoutDashboard, Loader2Icon, User } from 'lucide-react'
+import { useState } from 'react'
 import '../globals.css'
-
+import { SignInButton } from '@clerk/nextjs'
+import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const suggestion = [
   {
@@ -28,11 +32,40 @@ const suggestion = [
   }
 ];
 
-
 export default function Hero() {
 
+  const router = useRouter();
   const [userInput, setUserInput] = useState <string>();
+  const [loading, setLoading] = useState(false);
 
+  const CreateNewProject = async()=>{
+    setLoading(true);
+    const projectId = uuidv4();
+    const frameId = generateRandomFrameNumber();
+    const messages = [
+      {
+        role:'user',
+        content: userInput
+      }
+    ]
+    try {
+     
+      const result = await axios.post('api/projects', {
+        projectId:  projectId,
+        frameId: frameId,
+        messages: messages
+      });
+      console.log(result.data);
+      setLoading(false);
+      toast.success('Project Created');
+      router.push(`/playground/${projectId}?frameId=${frameId}`)
+
+    } catch (error) {
+      toast.error("Internal Server Error");
+      setLoading(false)
+      console.log(error);
+    }
+  }
 
   return (
     <div className='flex flex-col justify-center items-center h-[80vh]'>
@@ -45,7 +78,10 @@ export default function Hero() {
 
             <div className='flex flex-row justify-between items-center'>
                 <Button variant={"ghost"} size={"icon"}><ImagePlus className='w-10'/></Button>
-                <Button><ArrowUp size={30} /></Button>
+                {/* <SignInButton mode='modal' forceRedirectUrl={"/workspace"} > */}
+                  <Button disabled={!userInput || loading} onClick={CreateNewProject} >
+                   {loading? <Loader2Icon className='animate-spin' />: <ArrowUp size={30} />}</Button>
+                {/* </SignInButton> */}
             </div>
         </div>
 
@@ -57,3 +93,12 @@ export default function Hero() {
     </div>
   )
 }
+
+
+
+
+const generateRandomFrameNumber = () =>{
+  const num = Math.floor(Math.random()*10000)
+  return num;
+}
+

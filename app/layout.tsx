@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
-
-
+import { Providers } from "./_components/providers";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -10,22 +9,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`antialiased`}
-      >    <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            
-            {children}
-          </ThemeProvider>
+      <body className="antialiased">
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
