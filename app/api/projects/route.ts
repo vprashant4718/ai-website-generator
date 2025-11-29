@@ -15,7 +15,7 @@ export async function POST(req:NextRequest){
         return new Response("Missing IDs", { status: 400 });
     }else{
         console.log(projectId, frameId)
-    }
+    } 
     
     const projectResult = await db.insert(projectTable).values({
         projectId:projectId,
@@ -31,6 +31,7 @@ export async function POST(req:NextRequest){
 
     const chatResult = await db.insert(chatTable).values({
         chatMessage:messages,
+        frameId:frameId,
         createdBy: user?.primaryEmailAddress?.emailAddress
     });
 
