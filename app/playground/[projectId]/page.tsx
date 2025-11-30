@@ -46,6 +46,8 @@ useEffect(()=>{
       if(result.data?.chatMessages?.length ==1){
         const userMsg = result.data?.chatMessages[0].content;
         SendMessage(userMsg);
+      } else{
+        setMessages(result.data?.chatMessages)
       }
     
   }
@@ -109,7 +111,7 @@ useEffect(()=>{
 };
 
 useEffect(()=>{
-  if(messages.length > 0 && !loading ){
+  if(messages.length > 0  ){
     SaveMessages();
   }
 },[messages]);
@@ -119,7 +121,7 @@ const SaveMessages = async()=>{
     messages: messages,
     frameId:frameId
   });
-  console.log(result);
+ 
 }
 
   return (
@@ -134,14 +136,14 @@ const SaveMessages = async()=>{
             </div>
 
             {/* website design section */}
-            <div className="w-[55%] ">
-              <WebsiteDesign />
+            <div className="w-[75%] ">
+              <WebsiteDesign generatedCode={generatedCode}  />
             </div>
 
             {/* element setting section */}
-            <div className="w-[20%] ">
+            {/* <div className="w-[20%] ">
               <ElementSettingSection />
-            </div>
+            </div> */}
         </div>
         
     </div>

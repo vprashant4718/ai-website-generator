@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Message } from '../[projectId]/page'
 import { Button } from '@/components/ui/button';
-import { ArrowUp, Loader2Icon } from 'lucide-react';
-
+import { ArrowUp, Loader2Icon } from 'lucide-react'; 
 
 type Props = {
   loading: boolean,
