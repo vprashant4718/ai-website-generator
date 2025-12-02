@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
       IMPORTANT RULES:
       1. NO EXTERNAL LOCAL CSS/JS FILES: You must NOT use <link rel="stylesheet" href="style.css"> or <script src="script.js">. These files do not exist.
-      2. USE  CSS:  use  css 
+      2. USE  CSS: You can use tailwind or bootstap or inline css  
       3. INLINE EVERYTHING: If you need custom CSS, put it inside <style> tags. If you need JS, put it inside <script> tags.
       4. IMAGES: Use "https://picsum.photos/800/600" for placeholders. Do NOT use source.unsplash.com.
       5. COMPLETE HTML: Return the full code including <!DOCTYPE html>, <html>, <head>, and <body>.

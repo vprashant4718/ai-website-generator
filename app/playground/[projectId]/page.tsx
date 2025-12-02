@@ -128,7 +128,8 @@ export default function Page() {
 
         // Step 3: If no <html>, wrap detected HTML-like part
         // Strip all markdown explanations (like ### How to test)
-        cleaned = cleaned.replace(/#+\s*How to[\s\S]*$/gi,"").trim();
+
+        cleaned = cleaned?.replace(/#+\s*How to[\s\S]*$/gi,"").trim();
         setGeneratedCode((prev) => (prev || "") + cleaned);
       }
 
