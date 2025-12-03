@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Code, Download, Monitor, SquareArrowOutUpRight, TabletSmartphone } from 'lucide-react'
-import React from 'react'
-import { blob } from 'stream/consumers'
+import ViewCodeBlock from './ViewCodeBlock';
+import { useEffect, useState } from 'react';
 
 const HTML_DOC = `<!DOCTYPE html>
       <html lang="en">
@@ -49,23 +49,26 @@ const HTML_DOC = `<!DOCTYPE html>
       </html>`
 
 export default function WebPageTool({selectedScreenSize, setSelectedScreenSize, generatedCode}:any) {
-    const ViewInNewTab = ()=>{
-        if(!generatedCode)  return;
+    const [finalCode, setFinalCode] = useState<string>();
 
+    useEffect(()=>{
         let pureCode = generatedCode || "";
-
         // Remove markdown fences and stray junk before <!DOCTYPE> or <html>
         pureCode = pureCode
         .replaceAll("```html", "")
         .replaceAll("```", "")
-        .replace(/^[^<]*(?=<)/, "")     // removes “TYPE >” or anything before first <html> or <!DOCTYPE>
+        .replace(/^[^<]*(?=<)/, "")  // removes “TYPE >” or anything before first <html> or <!DOCTYPE>
         .trim();
-
         //  Inject clean code into full HTML document
         const cleanCode = HTML_DOC.replace("{code}", pureCode);
-        
 
-        const blob = new Blob([cleanCode], {type:'text/html'});
+        setFinalCode(cleanCode);
+    }, [generatedCode]);
+
+    const ViewInNewTab = ()=>{
+        if(!finalCode)  return;
+
+        const blob = new Blob([finalCode??''], {type:'text/html'});
         const url = URL.createObjectURL(blob);
 
         window.open(url, '_blank')
@@ -78,7 +81,9 @@ export default function WebPageTool({selectedScreenSize, setSelectedScreenSize, 
         </div>
         <div className='flex gap-3'>
             <Button variant={'outline'} onClick={ViewInNewTab}>View <SquareArrowOutUpRight /></Button>
-            <Button variant={'outline'} onClick={ViewInNewTab}>View <Code /></Button>
+            <ViewCodeBlock code={finalCode} >
+            <Button >Code <Code /></Button>
+            </ViewCodeBlock>
             <Button variant={'outline'} onClick={ViewInNewTab}>Download <Download /></Button>
         </div>
     </div>
