@@ -11,7 +11,7 @@ type Props = {
 
 export default function ChatSection({ messages, loading, onSend }: Props) {
   const [input, setInput] = useState<string>('');
-  const messagesEndRef = useRef<HTMLDivElement>(null); // 👈 ref to the bottom of chat
+  const messagesEndRef = useRef<HTMLDivElement>(null); //  ref to the bottom of chat
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -19,7 +19,7 @@ export default function ChatSection({ messages, loading, onSend }: Props) {
     setInput('');
   };
 
-  // 👇 Auto-scroll to bottom whenever messages or loading state changes
+  // Auto-scroll to bottom whenever messages or loading state changes
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -63,7 +63,7 @@ export default function ChatSection({ messages, loading, onSend }: Props) {
           </div>
         )}
 
-        {/* 👇 This keeps scroll always at bottom */}
+        {/*  This keeps scroll always at bottom */}
         <div ref={messagesEndRef}></div>
       </div>
 

@@ -165,6 +165,7 @@ export default function Page() {
       if (codeBuffer) {
         await saveGeneratedCode(codeBuffer);
         toast.success("Website is Ready");
+         window.location.reload();
       }
     } catch (e) {
       console.error("Error saving generated code:", e);

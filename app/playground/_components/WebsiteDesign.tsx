@@ -75,12 +75,13 @@ export default function WebsiteDesign({ generatedCode }: Props) {
         generatedCode
           ?.replaceAll("```html", "")
           .replaceAll("```", "")
+          .replace(/@apply[^;]+;/g, '')
           .replace(/^[^<]*(?=<)/, "") // remove junk before <!DOCTYPE>
           .trim() ?? "";
 
       root.innerHTML = html;
 
-      // ✅ NEW FIX: Execute inline and external <script> tags
+      //  NEW FIX: Execute inline and external <script> tags
       const scripts = root.querySelectorAll("script");
       scripts.forEach((oldScript) => {
         const newScript = doc.createElement("script");
@@ -93,7 +94,7 @@ export default function WebsiteDesign({ generatedCode }: Props) {
 
 
   return (
-    <div className='p-5 w-full flex flex-col items-center '>
+    <div className='p-5 w-full flex flex-col justify-center items-center '>
     <iframe
       ref={iframeRef}
       title="AI Preview"

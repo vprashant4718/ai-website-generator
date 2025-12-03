@@ -54,14 +54,14 @@ export default function WebPageTool({selectedScreenSize, setSelectedScreenSize, 
 
         let pureCode = generatedCode || "";
 
-        // 1️⃣ Remove markdown fences and stray junk before <!DOCTYPE> or <html>
+        // Remove markdown fences and stray junk before <!DOCTYPE> or <html>
         pureCode = pureCode
         .replaceAll("```html", "")
         .replaceAll("```", "")
         .replace(/^[^<]*(?=<)/, "")     // removes “TYPE >” or anything before first <html> or <!DOCTYPE>
         .trim();
 
-        // 2️⃣ Inject clean code into full HTML document
+        //  Inject clean code into full HTML document
         const cleanCode = HTML_DOC.replace("{code}", pureCode);
         
 
