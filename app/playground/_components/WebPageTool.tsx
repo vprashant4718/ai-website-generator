@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Code, Download, Monitor, SquareArrowOutUpRight, TabletSmartphone } from 'lucide-react'
+import { Code, Code2Icon, Download, Monitor, SquareArrowOutUpRight, TabletSmartphone } from 'lucide-react'
 import ViewCodeBlock from './ViewCodeBlock';
 import { useEffect, useState } from 'react';
 
@@ -70,8 +70,20 @@ export default function WebPageTool({selectedScreenSize, setSelectedScreenSize, 
 
         const blob = new Blob([finalCode??''], {type:'text/html'});
         const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    }
 
-        window.open(url, '_blank')
+    const downloadCode = ()=>{
+        const blob = new Blob([finalCode ?? '' ], {type:'text/html'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
     }
   return (
     <div className='p-2 shadow rounded-xl w-full flex justify-between'>
@@ -80,11 +92,11 @@ export default function WebPageTool({selectedScreenSize, setSelectedScreenSize, 
             <Button variant={'ghost'} onClick={()=>{setSelectedScreenSize('mobile'); console.log("mobile")} } className={`${selectedScreenSize === 'mobile' ? 'border border-primary':null}`}> <TabletSmartphone /></Button>
         </div>
         <div className='flex gap-3'>
-            <Button variant={'outline'} onClick={ViewInNewTab}>View <SquareArrowOutUpRight /></Button>
+            <Button variant={'outline'} className=' cursor-pointer' onClick={ViewInNewTab}>View <SquareArrowOutUpRight /></Button>
             <ViewCodeBlock code={finalCode} >
-            <Button >Code <Code /></Button>
+            <span className='flex flex-row justify-center items-center gap-3 bg-white hover:bg-gray-100 dark:bg-neutral-900 border dark:hover:bg-neutral-800 dark:border-neutral-700 border-gray-200 p-1 px-2 rounded-sm cursor-pointer '><span>Code</span> <Code2Icon /></span>
             </ViewCodeBlock>
-            <Button variant={'outline'} onClick={ViewInNewTab}>Download <Download /></Button>
+            <Button variant={'outline'} className=' cursor-pointer' onClick={downloadCode}>Download <Download /></Button>
         </div>
     </div>
   )

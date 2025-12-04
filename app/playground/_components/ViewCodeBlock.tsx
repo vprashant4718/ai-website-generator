@@ -26,10 +26,10 @@ export default function DialogDemo({children, code}:any) {
     }
   return (
     <Dialog> 
-        <DialogTrigger> {children}</DialogTrigger>
+        <DialogTrigger > {children}</DialogTrigger>
         <DialogContent className="min-w-5xl max-h-[600px] overflow-auto" >
           <DialogHeader>
-            <DialogTitle asChild><div className="flex items-center gap-48" ><span className="text-black dark:text-white">Source Code</span> <Button onClick={handleCopy} > <Copy /></Button> </div></DialogTitle>
+            <DialogTitle asChild><div className="flex items-center gap-48" ><span className="text-black dark:text-white">Source Code</span> <span onClick={handleCopy} > <Copy /></span> </div></DialogTitle>
             <DialogDescription asChild>
                 <div>
                     <SyntaxHighlighter language="javascript" style={theme==='dark'?dark : docco}>
