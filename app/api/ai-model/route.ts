@@ -94,7 +94,7 @@ Only a full HTML file with inline CSS, JS, and working design.
    const response = await axios.post(
   "https://openrouter.ai/api/v1/chat/completions",
   {
-    model: "mgoogle/gemma-3-4b-it:free",
+    model: "openai/gpt-oss-120b:free",
     messages: fullMessages,
     stream: true,
   },
