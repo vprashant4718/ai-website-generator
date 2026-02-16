@@ -91,24 +91,21 @@ Only a full HTML file with inline CSS, JS, and working design.
     const fullMessages = [systemPrompt, ...messages];
 
     // STEP 2: Send request to OpenRouter
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        model: "openai/gpt-oss-20b:free", // Or your preferred model
-        messages: fullMessages,
-        stream: true,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "http://localhost:3000",
-          "X-Title": "AI Website Builder",
-        },
-        responseType: "stream",
-      }
-    );
-
+   const response = await axios.post(
+  "https://openrouter.ai/api/v1/chat/completions",
+  {
+    model: "meta-llama/llama-3-8b-instruct",
+    messages: fullMessages,
+    stream: true,
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    responseType: "stream",
+  }
+);
     const stream = response.data;
     const encoder = new TextEncoder();
 
