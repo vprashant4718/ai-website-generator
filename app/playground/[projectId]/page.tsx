@@ -4,7 +4,6 @@ import PlaygroundHeader from "../_components/PlaygroundHeader";
 import "../../globals.css";
 import ChatSection from "../_components/ChatSection";
 import WebsiteDesign from "../_components/WebsiteDesign";
-// import ElementSettingSection from "../_components/ElementSettingSection";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -151,7 +150,7 @@ export default function Page() {
 
     setLoading(false);
 
-    // ✅ Save messages once, after streaming finished
+    //  Save messages once, after streaming finished
     try {
       if (allMessages.length > 0) {
         await SaveMessages(allMessages);
@@ -160,7 +159,7 @@ export default function Page() {
       console.error("Error saving chat messages:", e);
     }
 
-    // ✅ Save generated code once, after full code received
+    //  Save generated code once, after full code received
     try {
       if (codeBuffer) {
         await saveGeneratedCode(codeBuffer);
@@ -211,7 +210,7 @@ export default function Page() {
 
       <div className="flex w-full justify-between">
         {/* chat section */}
-        <div className="w-[25%]">
+        <div className="w-[20%]">
           <ChatSection
             loading={loading}
             messages={messages}
@@ -220,14 +219,11 @@ export default function Page() {
         </div>
 
         {/* website design section */}
-        <div className="w-[75%]">
+        <div className="w-[80%]">
           <WebsiteDesign generatedCode={generatedCode || ""} />
         </div>
 
-        {/* element setting section (later) */}
-        {/* <div className="w-[20%]">
-          <ElementSettingSection />
-        </div> */}
+       
       </div>
     </div>
   );

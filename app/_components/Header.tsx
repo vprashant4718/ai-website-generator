@@ -5,7 +5,7 @@ import Logo from '../../assets/ai-logo.png';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { SignInButton } from '@clerk/nextjs';
+import { SignInButton, UserButton } from '@clerk/nextjs';
 import { useUser } from '@clerk/nextjs';
 
 const HeadButtons = [
@@ -23,7 +23,7 @@ const HeadButtons = [
 
 export default function Header() {
 
-  const { isSignedIn, user, isLoaded } = useUser()
+  const { isSignedIn, user, isLoaded } = useUser();
 
   return (
     <div className='flex flex-row justify-between items-center p-3'>
@@ -51,6 +51,7 @@ export default function Header() {
             <Button size={"sm"} >Get Started <ArrowRight/></Button>
           </SignInButton> }
           <ModeToggle />
+          {isSignedIn &&  <UserButton />      }
         </div>
     </div>
   )

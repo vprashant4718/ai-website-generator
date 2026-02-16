@@ -27,9 +27,9 @@ export default function ChatSection({ messages, loading, onSend }: Props) {
   }, [messages, loading]);
 
   return (
-    <div className="p-4 shadow h-[91vh] flex flex-col">
+    <div className="p-2 shadow h-[91vh] flex flex-col">
       {/* Message Section */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-3 flex-col">
+      <div className="flex-1 overflow-y-auto p-2 space-y-3 flex-col">
         {messages?.length === 0 ? (
           <p className="text-center text-gray-500">No Messages</p>
         ) : (

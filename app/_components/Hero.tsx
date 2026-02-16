@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowUp, HomeIcon, ImagePlus, Key, LayoutDashboard, Loader2Icon, User } from 'lucide-react'
 import { useState } from 'react'
 import '../globals.css'
-import { SignInButton } from '@clerk/nextjs'
+import { SignInButton, useUser } from '@clerk/nextjs'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'sonner'
@@ -37,6 +37,8 @@ export default function Hero() {
   const router = useRouter();
   const [userInput, setUserInput] = useState <string>();
   const [loading, setLoading] = useState(false);
+
+  const {isSignedIn, isLoaded, user } = useUser();
 
   const CreateNewProject = async()=>{
     setLoading(true);
@@ -77,11 +79,15 @@ export default function Hero() {
              value={userInput} onChange={(e)=> setUserInput(e.target.value)}/>
 
             <div className='flex flex-row justify-between items-center'>
-                <Button variant={"ghost"} size={"icon"}><ImagePlus className='w-10'/></Button>
-                {/* <SignInButton mode='modal' forceRedirectUrl={"/workspace"} > */}
+                  <Button variant={"ghost"} size={"icon"}><ImagePlus className='w-10'/></Button>
+               {isLoaded && isSignedIn ? 
                   <Button disabled={!userInput || loading} onClick={CreateNewProject} >
                    {loading? <Loader2Icon className='animate-spin' />: <ArrowUp size={30} />}</Button>
-                {/* </SignInButton> */}
+                      : 
+                  <SignInButton mode='modal'forceRedirectUrl={'/workspace'} >
+                      <Button disabled={!userInput || loading}  >
+                        {loading? <Loader2Icon className='animate-spin' />: <ArrowUp size={30} />}</Button>
+                 </SignInButton> }
             </div>
         </div>
 
